@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import { TEMPLATE_SETTINGS } from "@/constants/template";
 
 export type WeekendSystem = "friday-saturday" | "saturday-sunday" | undefined;
 
@@ -46,3 +47,14 @@ export type ValidationResult = {
   isValid: boolean;
   error?: string;
 };
+
+export type ExcludeOptions = {
+  excludePublicHolidays: boolean;
+  excludeMC: boolean;
+  excludeAnnualLeave: boolean;
+  excludeEmergencyLeave: boolean;
+};
+
+export type ExportFormat = "pdf" | "docx";
+
+export type ExportTemplate = keyof typeof TEMPLATE_SETTINGS;

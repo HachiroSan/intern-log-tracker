@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { format } from "date-fns";
+import { format, isValid, startOfWeek, differenceInDays } from "date-fns";
 import { WeekendSystem } from "@/types";
 import { DateRange } from "react-day-picker";
 
@@ -54,3 +54,24 @@ export const calculateWorkingDays = (
 
   return workingDays;
 };
+
+export const calculateDaysLeft = (dateRange: DateRange) => {
+  return dateRange.to
+    ? Math.max(0, differenceInDays(dateRange.to, new Date()))
+    : 0;
+};
+
+export function getWeekNumber(dateRange: DateRange, date: Date): number {
+  if (!isValid(date) || !isValid(dateRange.from) || !isValid(dateRange.to)) {
+    throw new Error("Invalid date(s) provided");
+  }
+
+  if (!dateRange.from) {
+    throw new Error("Invalid date range: 'from' date is undefined");
+  }
+  const startDate = startOfWeek(dateRange.from, { weekStartsOn: 1 }); // Start on Monday
+  const daysFromStart = differenceInDays(date, startDate);
+  const weekNumber = Math.floor(daysFromStart / 7) + 1;
+
+  return weekNumber;
+}
