@@ -1,10 +1,6 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import {
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { DialogDescription, DialogHeader } from "@/components/ui/dialog";
 
 // Prevent the hydration warning
 const DynamicImage = dynamic(() => import("next/image"), { ssr: false });
@@ -18,7 +14,6 @@ export default function AboutDialog() {
 
   return (
     <DialogHeader className="space-y-3">
-      <DialogTitle className="text-2xl font-mono font-bold">About</DialogTitle>
       <DialogDescription className="flex flex-col">
         {isMounted && (
           <DynamicImage

@@ -4,14 +4,14 @@ import { useUserContext } from "@/context/UserContext";
 import type { WeekendSystem } from "@/types";
 import { Button } from "@/components/ui/button";
 import { DialogFooter, DialogClose } from "@/components/ui/dialog";
-import DateRangePicker from "./DateRangePicker";
+import DateRangePicker from "@/components/dialog/configure/DateRangePicker";
 import { useState, useEffect } from "react";
 import type { DateRange } from "react-day-picker";
 import { useToast } from "@/hooks/use-toast";
 
 const weekendSystems: WeekendSystem[] = ["friday-saturday", "saturday-sunday"];
 
-export default function ConfigureForm() {
+export default function ConfigureDialog() {
   const {
     weekendSystem,
     setWeekendSystem,

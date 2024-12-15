@@ -42,12 +42,25 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen flex items-center">
+    <div className="min-h-screen flex flex-col items-center">
       <div className="container mx-auto px-4 py-16">
         <Suspense fallback={<LoadingSpinner />}>
           <InternshipLogger />
         </Suspense>
       </div>
+      <footer className="font-mono text-sm bottom-0 w-full my-2 text-center">
+        <p className="text-gray-600">
+          Project source code can be viewed{" "}
+          <a
+            href="https://github.com/HachiroSan/intern-log-tracker"
+            className="text-blue-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            here
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

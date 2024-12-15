@@ -56,6 +56,15 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        "party-popper": "party-popper 3s ease-in-out infinite",
+      },
+      keyframes: {
+        "party-popper": {
+          "0%, 100%": { transform: "rotate(0deg) scale(1)", opacity: "1" },
+          "50%": { transform: "rotate(15deg) scale(1.2)", opacity: "0.3" },
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

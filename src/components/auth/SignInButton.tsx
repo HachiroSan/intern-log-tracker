@@ -1,35 +1,60 @@
+import { LogIn, Wand2 } from "lucide-react";
+import { useSignIn } from "@/hooks/useSignIn";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { LogIn } from "lucide-react";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/lib/firebase-config";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FC } from "react";
 
-export const SignInButton = () => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+interface SignInButtonProps {
+  className?: string;
+  isAdventure?: boolean;
+  size?: "default" | "sm" | "lg" | "icon";
+}
 
-  const handleSignIn = async () => {
-    setIsLoading(true);
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      router.push("/");
-    } catch (error) {
-      console.error("Error signing in:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+export const SignInButton: FC<SignInButtonProps> = ({
+  className,
+  isAdventure = false,
+  size = "default",
+}) => {
+  const { signIn, isLoading } = useSignIn();
 
   return (
-    <Button onClick={handleSignIn} className="w-full" disabled={isLoading}>
-      {isLoading ? (
-        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-      ) : (
-        <LogIn className="mr-2 h-4 w-4" />
+    <Button
+      onClick={signIn}
+      disabled={isLoading}
+      size={size}
+      className={cn(
+        "relative group transition-all duration-300",
+        isLoading && "cursor-not-allowed",
+        isAdventure &&
+          "font-mono bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white h-16",
+        className
       )}
-      {isLoading ? "Signing in..." : "Sign in with Google"}
+    >
+      <span
+        className={cn(
+          "flex items-center justify-center gap-2",
+          isLoading && "opacity-0"
+        )}
+      >
+        {isAdventure ? (
+          <>
+            Join the Adventure
+            <Wand2 className="ml-2 h-4 w-5 animate-bounce" />
+          </>
+        ) : (
+          <>
+            <LogIn className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            Sign in with Google
+          </>
+        )}
+      </span>
+
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          <span className="ml-2">Signing in...</span>
+        </div>
+      )}
     </Button>
   );
 };
